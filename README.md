@@ -1,8 +1,8 @@
 # SSL/TLS Certificate Rotation Automation
 
-Automated certificate rotation for IIS (PowerShell) and Nginx (Linux), with secure key handling
-and a fail-safe verification step. Pulls a PFX from S3, imports it correctly on Windows, re-points
-every HTTPS binding in one pass, and cleans up so no private key is left on disk.
+Automates SSL/TLS certificate **deployment** on IIS with PowerShell — pulls a PFX from S3, imports it
+correctly on Windows with secure key handling, re-points every HTTPS binding in one pass, and cleans
+up so no private key is left on disk. Includes a manual runbook for the equivalent steps on Nginx/Linux.
 
 > All bucket names, thumbprints, domains, and paths in this repo are placeholders.
 
@@ -10,12 +10,13 @@ every HTTPS binding in one pass, and cleans up so no private key is left on disk
 
 Certificate renewal across web servers was a manual, error-prone chore — import the PFX by hand,
 find every HTTPS binding in IIS, re-point each one, and hope nothing was missed. A single skipped
-binding meant a site serving an expired cert. This automates the whole flow and removes the common
-failure modes.
+binding meant a site serving an expired cert. This script automates that deployment step and removes
+the common failure modes.
 
-It covers the full certificate lifecycle: CSR generation, issuance through a commercial CA
-(e.g., Sectigo / DigiCert), DNS-based domain validation via the registrar (e.g., Namecheap / GoDaddy)
-and Route 53, and automated deployment to IIS and Nginx.
+**Scope:** this automates the *deployment* stage of certificate renewal — importing the new cert and
+re-pointing all HTTPS bindings. The earlier stages (CSR generation, issuance through a commercial CA
+such as Sectigo or DigiCert, and DNS-based domain validation via the registrar or Route 53) are done
+separately; this picks up once the issued PFX is in S3.
 
 ## What it does (IIS)
 
