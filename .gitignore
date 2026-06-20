@@ -1,0 +1,18 @@
+# Never commit certificates, keys, or secrets
+*.pfx
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+
+# Local working dirs
+certs/
+work/
+temp/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
